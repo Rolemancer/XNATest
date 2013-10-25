@@ -21,11 +21,14 @@ namespace SimpleGame
         Vector2 origin;
         ContentManager content;
         RenderTarget2D renderTarget;
+        SpriteFont Font;
+
+        Dictionary<string, ImageEffect> effectList = new Dictionary<string, ImageEffect>();
 
         public Image()
         {
             Path = Text = string.Empty;
-            //FontName = "";
+            FontName = "Font/TestFont";
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Alpha = 1.0f;
@@ -38,14 +41,49 @@ namespace SimpleGame
 
             if (!string.IsNullOrEmpty(Path))
             {
-                content.Load<Texture2D>(Path);
+                Texture = content.Load<Texture2D>(Path);
             }
 
+            Font = content.Load<SpriteFont>(FontName);
+
             Vector2 dimensions = Vector2.Zero;
+
+            if (Texture != null)
+            {
+                dimensions.X += Texture.Width;
+                dimensions.Y = Math.Max(Texture.Height, Font.MeasureString(Text).X);
+            }
+            else
+            {
+                dimensions.Y = Font.MeasureString(Text).X;
+            }
+
+            dimensions.X += Font.MeasureString(Text).X;
+
+            if (SourceRect == Rectangle.Empty)
+            {
+                SourceRect = new Rectangle(0, 0, (int)dimensions.X, (int)dimensions.Y);
+            }
+
+            renderTarget = new RenderTarget2D(ScreenManager.Instance.GraphicsDevice, (int)dimensions.X, (int)dimensions.Y);
+            ScreenManager.Instance.GraphicsDevice.SetRenderTarget(renderTarget);
+            ScreenManager.Instance.GraphicsDevice.Clear(Color.Transparent);
+
+            ScreenManager.Instance.SpriteBatch.Begin();
+            if (Texture != null)
+            {
+                ScreenManager.Instance.SpriteBatch.Draw(Texture, Vector2.Zero, Color.White);
+            }
+            ScreenManager.Instance.SpriteBatch.DrawString(Font, Text, Vector2.Zero, Color.White);
+            ScreenManager.Instance.SpriteBatch.End();
+            Texture = renderTarget;
+
+            ScreenManager.Instance.GraphicsDevice.SetRenderTarget(null);
         }
 
         public void UnloadContent()
         {
+            content.Unload();
         }
 
         public void Update(GameTime gameTime)
@@ -54,6 +92,8 @@ namespace SimpleGame
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            origin = new Vector2(SourceRect.Width / 2, SourceRect.Height / 2);
+            spriteBatch.Draw(Texture, Position + origin, SourceRect, Color.White * Alpha, 0.0f, origin, Scale, SpriteEffects.None, 0.0f);
         }
     }
 }
