@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Vsix xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="1.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2010">
+  <Identifier Id="2d71fd10-bda3-4152-bedf-4f3036fa7f25">
+    <Name>Microsoft XNA Game Studio</Name>
+    <Author>Microsoft Corporation</Author>
+    <Version>4.0</Version>
+    <Description xml:space="preserve">XNA Game Studio Package provides game development experiences for Xbox 360, Windows, and Windows Phone.</Description>
+    <Locale>1033</Locale>
+    <InstalledByMsi>true</InstalledByMsi>
+    <SupportedProducts>
+      <VisualStudio Version="10.0">
+        <Edition>VSTS</Edition>
+        <Edition>VSTD</Edition>
+        <Edition>Pro</Edition>
+        <Edition>VCSExpress</Edition>
+        <Edition>VPDExpress</Edition>
+      </VisualStudio>
+    </SupportedProducts>
+    <SupportedFrameworkRuntimeEdition MinVersion="4.0" MaxVersion="4.0" />
+    <SystemComponent>true</SystemComponent>
+  </Identifier>
+  <References />
+  <Content>
+    <MefComponent>Microsoft.Xna.GameStudio.Core.dll</MefComponent>
+    <MefComponent>Microsoft.Xna.GameStudio.dll</MefComponent>
+    <VsPackage>Microsoft.Xna.GameStudio.Core.pkgdef</VsPackage>
+    <VsPackage>Microsoft.Xna.GameStudio.pkgdef</VsPackage>
+    <ProjectTemplate>ProjectTemplates</ProjectTemplate>
+    <ItemTemplate>ItemTemplates</ItemTemplate>
+  </Content>
+</Vsix>
