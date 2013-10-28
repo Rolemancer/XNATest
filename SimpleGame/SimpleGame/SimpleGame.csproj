@@ -107,6 +107,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FadeEffect.cs" />
     <Compile Include="GameScreen.cs" />
     <Compile Include="Image.cs" />
     <Compile Include="ImageEffect.cs" />
@@ -120,6 +121,7 @@
   <ItemGroup>
     <Content Include="Game.ico" />
     <Content Include="GameThumbnail.png" />
+    <Content Include="Load\ScreenManager.xml" />
     <Content Include="Load\SplashScreen.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

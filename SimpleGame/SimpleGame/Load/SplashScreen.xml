@@ -2,10 +2,11 @@
 <SplashScreen>
   <Image>
     <Path>SplashScreen/skeletonFreshhead</Path>
-    <Position>
-      <X>0</X>
-      <Y>0</Y>
-    </Position>
+    <Effects>FadeEffect</Effects>
+    <IsActive>true</IsActive>
+    <fadeEffect>
+      <FadeSpeed>0.2</FadeSpeed>
+    </fadeEffect>
     <Text>TestText</Text>
   </Image>
   <!--<Path>SplashScreen/skeletonFreshhead</Path>

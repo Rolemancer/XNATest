@@ -17,6 +17,11 @@ namespace SimpleGame
         {
             get
             {
+                if (_instance == null)
+                {
+                    XmlManager<ScreenManager> xml = new XmlManager<ScreenManager>();
+                    _instance = xml.Load("Load/ScreenManager.xml");
+                }
                 return _instance;
             }
         }
@@ -28,12 +33,24 @@ namespace SimpleGame
         public GraphicsDevice GraphicsDevice;
         public SpriteBatch SpriteBatch;
 
+        public Image image;
+
         private ScreenManager()
         {
             Dimesions = new Vector2(640, 480);
             currentScreen = new SplashScreen();
             xmlGameScreenManager.ThisType = currentScreen.ThisType;
             currentScreen = xmlGameScreenManager.Load("Load/SplashScreen.xml");
+        }
+
+        public void ChangeScreens(string screenName)
+        {
+            var screen = (GameScreen)Activator.CreateInstance(Type.GetType("SimpleGame." + screenName));
+        }
+
+        void Transition()
+        {
+
         }
 
         public void LoadContent(ContentManager manager)

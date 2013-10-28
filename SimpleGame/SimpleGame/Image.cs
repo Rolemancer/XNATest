@@ -16,6 +16,7 @@ namespace SimpleGame
         public string Text, FontName, Path;
         public Vector2 Position, Scale;
         public Rectangle SourceRect;
+        public bool IsActive;
 
         public Texture2D Texture;
         Vector2 origin;
@@ -24,16 +25,55 @@ namespace SimpleGame
         SpriteFont Font;
 
         Dictionary<string, ImageEffect> effectList = new Dictionary<string, ImageEffect>();
+        public string Effects;
+
+        public FadeEffect fadeEffect;
 
         public Image()
         {
-            Path = Text = string.Empty;
+            Path = Text = Effects = string.Empty;
             FontName = "Font/TestFont";
             Position = Vector2.Zero;
             Scale = Vector2.One;
             Alpha = 1.0f;
             SourceRect = Rectangle.Empty;
         }
+
+        void SetEffect<T>(ref T effect)
+        {
+            if (effect == null)
+            {
+                effect = Activator.CreateInstance<T>();
+            }
+            else
+            {
+                (effect as ImageEffect).IsActive = true;
+                var obj = this;
+                (effect as ImageEffect).LoadContent(ref obj);
+            }
+
+            effectList.Add(effect.GetType().Name, effect as ImageEffect);
+        }
+
+        public void ActivateEffect(string effect)
+        {
+            if (effectList.ContainsKey(effect))
+            {
+                effectList[effect].IsActive = true;
+                var obj = this;
+                effectList[effect].LoadContent(ref obj);
+            }
+        }
+
+        public void DeactivateEffect(string effect)
+        {
+            if (effectList.ContainsKey(effect))
+            {
+                effectList[effect].IsActive = true;
+                effectList[effect].UnloadContent();
+            }
+        }
+
 
         public void LoadContent()
         {
@@ -79,15 +119,35 @@ namespace SimpleGame
             Texture = renderTarget;
 
             ScreenManager.Instance.GraphicsDevice.SetRenderTarget(null);
+
+
+            SetEffect<FadeEffect>(ref fadeEffect);
+            if (!string.IsNullOrEmpty(Effects))
+            {
+                string[] split = Effects.Split(':');
+                for (int i = 0; i < split.Length; i++)
+                {
+                    ActivateEffect(split[i]);
+                }
+            }
         }
 
         public void UnloadContent()
         {
             content.Unload();
+            foreach (var effect in effectList)
+            {
+                DeactivateEffect(effect.Key);
+            }
         }
 
         public void Update(GameTime gameTime)
         {
+            foreach (var effect in effectList)
+            {
+                if (effect.Value.IsActive)
+                    effect.Value.Update(gameTime);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
