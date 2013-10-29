@@ -3,7 +3,6 @@
   <Image>
     <Path>SplashScreen/skeletonFreshhead</Path>
     <Effects>FadeEffect</Effects>
-    <IsActive>true</IsActive>
     <fadeEffect>
       <FadeSpeed>0.2</FadeSpeed>
     </fadeEffect>

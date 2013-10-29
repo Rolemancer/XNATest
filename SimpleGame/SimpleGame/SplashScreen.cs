@@ -8,6 +8,7 @@ using System.Xml.Serialization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 namespace SimpleGame
 {
@@ -38,6 +39,10 @@ namespace SimpleGame
         {
             base.Update(gameTime);
             Image.Update(gameTime);
+            if (InputManager.Instance.KeyPressed(Keys.Enter, Keys.Z))
+            {
+                ScreenManager.Instance.ChangeScreens("SplashScreen");
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch)

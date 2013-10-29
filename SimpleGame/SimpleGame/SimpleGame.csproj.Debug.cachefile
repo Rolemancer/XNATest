@@ -2,4 +2,6 @@ Content\SplashScreen\skeletonFreshhead.xnb
 Content\SplashScreen\skeletonDarkhead.xnb
 Content\SplashScreen\AvatarFloor.xnb
 Content\Font\TestFont.xnb
+Content\ScreenManager\FadeImage.xnb
+Load\ScreenManager.xml
 Load\SplashScreen.xml

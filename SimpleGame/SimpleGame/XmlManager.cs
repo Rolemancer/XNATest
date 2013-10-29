@@ -12,6 +12,11 @@ namespace SimpleGame
     {
         public Type ThisType;// {get; private set;}
 
+        public XmlManager()
+        {
+            ThisType = typeof(T);
+        }
+
         public T Load(string path)
         {
             T instance;

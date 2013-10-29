@@ -16,9 +16,13 @@ namespace SimpleGame
         [XmlIgnore]
         public Type ThisType;
 
+        public string XmlPath;
+
+
         public GameScreen()
         {
             ThisType = this.GetType();
+            XmlPath = "Load/" + ThisType.Name + ".xml";
         }
 
         public virtual void LoadContent()
@@ -33,7 +37,6 @@ namespace SimpleGame
 
         public virtual void Update(GameTime gameTime)
         {
-
         }
 
         public virtual void Draw(SpriteBatch spriteBatch)
