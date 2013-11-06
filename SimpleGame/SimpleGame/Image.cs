@@ -74,6 +74,32 @@ namespace SimpleGame
             }
         }
 
+        public void StoreEffects()
+        {
+            Effects = String.Empty;
+            foreach (var effect in effectList)
+            {
+                if (effect.Value.IsActive)
+                {
+                    Effects += effect.Key + ":";
+                }
+            }
+            if (!string.IsNullOrEmpty(Effects))
+                Effects.Remove(Effects.Length - 1);
+        }
+
+        public void RestoreEffects()
+        {
+            foreach (var effect in effectList)
+            {
+                DeactivateEffect(effect.Key);
+            }
+            string[] split = Effects.Split(':');
+            for (int i = 0; i < split.Length; i++)
+            {
+                ActivateEffect(split[i]);
+            }
+        }
 
         public void LoadContent()
         {
@@ -95,7 +121,7 @@ namespace SimpleGame
             }
             else
             {
-                dimensions.Y = Font.MeasureString(Text).X;
+                dimensions.Y = Font.MeasureString(Text).Y;
             }
 
             dimensions.X += Font.MeasureString(Text).X;
